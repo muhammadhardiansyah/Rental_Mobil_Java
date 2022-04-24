@@ -5,6 +5,15 @@
  */
 package rentalmobil;
 
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import mysql.Koneksi;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author WINDOWS 10
@@ -16,6 +25,37 @@ public class admin extends javax.swing.JFrame {
      */
     public admin() {
         initComponents();
+        //set minimal kalender
+        Date date = new Date();
+        tglPinjam.getJCalendar().setMinSelectableDate(date);
+        tglKembali.getJCalendar().setMinSelectableDate(date);
+        
+        //Koneksi database
+        Koneksi koneksi = new Koneksi();
+        
+        //Menampilkan tabel data peminjaman
+        Object [][] data = koneksi.getDataPeminjaman();
+        DefaultTableModel model;
+        model = (DefaultTableModel) tblDaftarPeminjaman.getModel();
+        Object[] row;
+        for (int i = 0; i < koneksi.getCountPeminjaman(); i++){
+            row = new Object[]{data[i][0],data[i][1],data[i][2],data[i][3],data[i][4]};
+            model.addRow(row);
+        }
+        
+        //Menampilkan dropdown user
+        Object[][] user_data = koneksi.getDataUser();
+        cbNama.addItem("Choose..");
+        for (int j=0; j < koneksi.getCountUser();j++){
+            cbNama.addItem((user_data[j][3]).toString());
+        }
+        
+        //Menampilkan dropdown merk
+        Object[][] merk_data = koneksi.getDataMobil();
+        cbMerk.addItem("Choose..");
+        for (int k=0; k < koneksi.getCountMobil();k++){
+            cbMerk.addItem((merk_data[k][1]).toString());
+        }
     }
 
     /**
@@ -38,18 +78,20 @@ public class admin extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblDaftarPeminjaman = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        btnTambah = new javax.swing.JButton();
+        btnUbah = new javax.swing.JButton();
+        btnHapus = new javax.swing.JButton();
+        tglPinjam = new com.toedter.calendar.JDateChooser();
+        jLabel7 = new javax.swing.JLabel();
+        tglKembali = new com.toedter.calendar.JDateChooser();
+        cbNama = new javax.swing.JComboBox<>();
+        cbMerk = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -171,17 +213,22 @@ public class admin extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblDaftarPeminjaman.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        tblDaftarPeminjaman.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "id", "Nama", "Merk", "Tgl Pinjam", "Tgl Kembali"
             }
         ));
-        jTable1.setGridColor(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setViewportView(jTable1);
+        tblDaftarPeminjaman.setGridColor(new java.awt.Color(255, 255, 255));
+        tblDaftarPeminjaman.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDaftarPeminjamanMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblDaftarPeminjaman);
 
         jLabel3.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
         jLabel3.setText("Nama");
@@ -190,64 +237,78 @@ public class admin extends javax.swing.JFrame {
         jLabel4.setText("Merk");
 
         jLabel5.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
-        jLabel5.setText("Selama");
+        jLabel5.setText("Tgl Pinjam");
 
         jLabel2.setFont(new java.awt.Font("Square721 BT", 1, 24)); // NOI18N
         jLabel2.setText("Peminjam");
 
-        jButton6.setText("Tambah");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnTambah.setText("Tambah");
+        btnTambah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnTambahActionPerformed(evt);
             }
         });
 
-        jButton7.setText("Ubah");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        btnUbah.setText("Ubah");
+        btnUbah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                btnUbahActionPerformed(evt);
             }
         });
 
-        jButton8.setText("Hapus");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        btnHapus.setText("Hapus");
+        btnHapus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                btnHapusActionPerformed(evt);
             }
         });
+
+        jLabel7.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
+        jLabel7.setText("Tgl Kembali");
+
+        tglKembali.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tglKembaliMouseClicked(evt);
+            }
+        });
+
+        cbNama.setFont(new java.awt.Font("Square721 BT", 0, 14)); // NOI18N
+        cbNama.setMaximumRowCount(100);
+
+        cbMerk.setFont(new java.awt.Font("Square721 BT", 0, 14)); // NOI18N
+        cbMerk.setMaximumRowCount(100);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(117, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(162, 162, 162))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(45, 45, 45)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(28, 28, 28))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jButton6)
+                        .addComponent(btnTambah)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnUbah, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(88, 88, 88))))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(tglKembali, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                    .addComponent(tglPinjam, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbNama, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbMerk, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,21 +317,29 @@ public class admin extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(cbNama, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                    .addComponent(jLabel3))
+                .addGap(12, 12, 12)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbMerk, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel5))
+                    .addComponent(tglPinjam, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel7))
+                    .addComponent(tglKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6)
-                    .addComponent(jButton7)
-                    .addComponent(jButton8))
+                    .addComponent(btnTambah)
+                    .addComponent(btnUbah)
+                    .addComponent(btnHapus))
                 .addContainerGap())
         );
 
@@ -283,12 +352,12 @@ public class admin extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE))
                         .addGap(48, 48, 48))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel6)
@@ -345,21 +414,114 @@ public class admin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+        Koneksi koneksi = new Koneksi();
+        
+        int id_peminjaman = koneksi.getLastIdPeminjaman() + 1;
+        
+        String nama = cbNama.getSelectedItem().toString();
+        int id_user = koneksi.getIdUser(nama);
+        
+        String merk = cbMerk.getSelectedItem().toString();
+        int id_mobil = koneksi.getIdMobil(merk);
+        
+        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
+        
+        Date tgl_Pinjam = tglPinjam.getDate();
+        String strPinjam = formater.format(tgl_Pinjam);
+        
+        Date tgl_Kembali= tglKembali.getDate();
+        String strKembali = formater.format(tgl_Kembali);
+        
+        try {
+            koneksi.tambahDataPeminjaman(id_peminjaman, id_user, id_mobil, strPinjam, strKembali);
+        } catch (SQLException ex) {
+            System.out.println("Error: "+ ex);
+        }
+        
+        DefaultTableModel tbl = (DefaultTableModel) tblDaftarPeminjaman.getModel();
+        tbl.addRow(new Object[]{id_peminjaman,nama,merk,strPinjam,strKembali});
+        
+        cbNama.setSelectedItem("Choose..");
+        cbMerk.setSelectedItem("Choose..");
+        tglPinjam.setDate(null);
+        tglKembali.setDate(null);
+        
+    }//GEN-LAST:event_btnTambahActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+        Koneksi koneksi = new Koneksi();
+        
+        int id_peminjaman = Integer.parseInt(tblDaftarPeminjaman.getValueAt(tblDaftarPeminjaman.getSelectedRow(), 0).toString());
+        
+        String nama = cbNama.getSelectedItem().toString();
+        int id_user = koneksi.getIdUser(nama);
+        
+        String merk = cbMerk.getSelectedItem().toString();
+        int id_mobil = koneksi.getIdMobil(merk);
+        
+        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
+        
+        Date tgl_Pinjam = tglPinjam.getDate();
+        String strPinjam = formater.format(tgl_Pinjam);
+        
+        Date tgl_Kembali= tglKembali.getDate();
+        String strKembali = formater.format(tgl_Kembali);
+        
+        koneksi.ubahDataPeminjaman(id_peminjaman, id_user, id_mobil, strPinjam, strKembali);
+        
+        DefaultTableModel tbl = (DefaultTableModel) tblDaftarPeminjaman.getModel();
+        tbl.setValueAt(nama, tblDaftarPeminjaman.getSelectedRow(), 1);
+        tbl.setValueAt(merk, tblDaftarPeminjaman.getSelectedRow(), 2);
+        tbl.setValueAt(strPinjam, tblDaftarPeminjaman.getSelectedRow(), 3);
+        tbl.setValueAt(strKembali, tblDaftarPeminjaman.getSelectedRow(), 4);
+        
+    }//GEN-LAST:event_btnUbahActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+        Koneksi koneksi = new Koneksi();
+        
+        int id_peminjaman = Integer.parseInt(tblDaftarPeminjaman.getValueAt(tblDaftarPeminjaman.getSelectedRow(), 0).toString());
+        
+        koneksi.hapusDataPeminjaman(id_peminjaman);
+        
+        DefaultTableModel tbl = (DefaultTableModel) tblDaftarPeminjaman.getModel();
+        tbl.removeRow(tblDaftarPeminjaman.getSelectedRow());
+        
+        cbNama.setSelectedItem("Choose..");
+        cbMerk.setSelectedItem("Choose..");
+        tglPinjam.setDate(null);
+        tglKembali.setDate(null);
+        
+       
+    }//GEN-LAST:event_btnHapusActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void tblDaftarPeminjamanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDaftarPeminjamanMouseClicked
+        // TODO add your handling code here:
+        cbNama.setSelectedItem(tblDaftarPeminjaman.getValueAt(tblDaftarPeminjaman.getSelectedRow(), 1).toString());
+        cbMerk.setSelectedItem(tblDaftarPeminjaman.getValueAt(tblDaftarPeminjaman.getSelectedRow(), 2).toString());
+        try {
+            DefaultTableModel table = (DefaultTableModel) tblDaftarPeminjaman.getModel();
+            int selectedRow = tblDaftarPeminjaman.getSelectedRow();
+            Date pinjam = new SimpleDateFormat("dd-MM-yyyy").parse((String)table.getValueAt(selectedRow, 3).toString());
+            Date kembali = new SimpleDateFormat("dd-MM-yyyy").parse((String)table.getValueAt(selectedRow, 4).toString());
+            tglPinjam.setDate(pinjam);
+            tglKembali.setDate(kembali);
+        } catch (ParseException ex) {
+            Logger.getLogger(admin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tblDaftarPeminjamanMouseClicked
+
+    private void tglKembaliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tglKembaliMouseClicked
+
+    }//GEN-LAST:event_tglKembaliMouseClicked
 
     /**
      * @param args the command line arguments
@@ -397,14 +559,16 @@ public class admin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnHapus;
+    private javax.swing.JButton btnTambah;
+    private javax.swing.JButton btnUbah;
+    private javax.swing.JComboBox<String> cbMerk;
+    private javax.swing.JComboBox<String> cbNama;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -412,14 +576,14 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTable tblDaftarPeminjaman;
+    private com.toedter.calendar.JDateChooser tglKembali;
+    private com.toedter.calendar.JDateChooser tglPinjam;
     // End of variables declaration//GEN-END:variables
 }
