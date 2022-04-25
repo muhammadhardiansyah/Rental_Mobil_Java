@@ -217,4 +217,29 @@ public class Koneksi {
         }
     }
     
+    public void tambahUser(String nama, String username, String password, String akses){
+        try{
+            String query = "INSERT into user (nama,username,password,akses) values (?,?,?,?)";
+            PreparedStatement stmt = (PreparedStatement) con.prepareStatement(query);
+            stmt.setString(1, nama);
+            stmt.setString(2, username);
+            stmt.setString(3, password);
+            stmt.setString(4, akses);
+            stmt.execute();  
+        }catch(SQLException ex){
+            System.out.println("Error: " + ex);
+        }
+    }
+    
+    public void tambahMobil(String merk, String jenis){
+        try{
+            String query = "INSERT into mobil (merk,jenis) values (?,?)";
+            PreparedStatement stmt = (PreparedStatement) con.prepareStatement(query);
+            stmt.setString(1, merk);
+            stmt.setString(2, jenis);
+            stmt.execute();  
+        }catch(SQLException ex){
+            System.out.println("Error: " + ex);
+        }
+    }
 }

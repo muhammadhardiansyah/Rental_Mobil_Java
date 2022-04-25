@@ -25,6 +25,7 @@ public class admin extends javax.swing.JFrame {
      */
     public admin() {
         initComponents();
+        this.setLocationRelativeTo(null);
         //set minimal kalender
         Date date = new Date();
         tglPinjam.getJCalendar().setMinSelectableDate(date);
@@ -74,9 +75,9 @@ public class admin extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        btnTambahUser = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        btnTambahMobil = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDaftarPeminjaman = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
@@ -149,14 +150,14 @@ public class admin extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
         jLabel1.setText("Admin");
 
-        jButton4.setBackground(new java.awt.Color(51, 255, 51));
-        jButton4.setFont(new java.awt.Font("Square721 BT", 1, 18)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Buat User");
-        jButton4.setActionCommand("Bua");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnTambahUser.setBackground(new java.awt.Color(51, 255, 51));
+        btnTambahUser.setFont(new java.awt.Font("Square721 BT", 1, 18)); // NOI18N
+        btnTambahUser.setForeground(new java.awt.Color(255, 255, 255));
+        btnTambahUser.setText("Buat User");
+        btnTambahUser.setActionCommand("Bua");
+        btnTambahUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnTambahUserActionPerformed(evt);
             }
         });
 
@@ -170,14 +171,14 @@ public class admin extends javax.swing.JFrame {
             }
         });
 
-        jButton9.setBackground(new java.awt.Color(255, 255, 102));
-        jButton9.setFont(new java.awt.Font("Square721 BT", 1, 18)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setText("Tambah Mobil");
-        jButton9.setActionCommand("Bua");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        btnTambahMobil.setBackground(new java.awt.Color(255, 255, 102));
+        btnTambahMobil.setFont(new java.awt.Font("Square721 BT", 1, 18)); // NOI18N
+        btnTambahMobil.setForeground(new java.awt.Color(255, 255, 255));
+        btnTambahMobil.setText("Tambah Mobil");
+        btnTambahMobil.setActionCommand("Bua");
+        btnTambahMobil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                btnTambahMobilActionPerformed(evt);
             }
         });
 
@@ -187,14 +188,14 @@ public class admin extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnTambahUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jButton9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnTambahMobil, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -207,9 +208,9 @@ public class admin extends javax.swing.JFrame {
                 .addGap(106, 106, 106)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnTambahUser, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnTambahMobil, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -406,9 +407,15 @@ public class admin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnTambahUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahUserActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+        TambahUser tu = new TambahUser();
+        tu.setVisible(true);
+        tu.pack();
+        tu.setLocationRelativeTo(null);
+        tu.setDefaultCloseOperation(admin.EXIT_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_btnTambahUserActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
@@ -499,9 +506,15 @@ public class admin extends javax.swing.JFrame {
        
     }//GEN-LAST:event_btnHapusActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+    private void btnTambahMobilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahMobilActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
+        TambahMobil tm = new TambahMobil();
+        tm.setVisible(true);
+        tm.pack();
+        tm.setLocationRelativeTo(null);
+        tm.setDefaultCloseOperation(admin.EXIT_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_btnTambahMobilActionPerformed
 
     private void tblDaftarPeminjamanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDaftarPeminjamanMouseClicked
         // TODO add your handling code here:
@@ -561,15 +574,15 @@ public class admin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnTambah;
+    private javax.swing.JButton btnTambahMobil;
+    private javax.swing.JButton btnTambahUser;
     private javax.swing.JButton btnUbah;
     private javax.swing.JComboBox<String> cbMerk;
     private javax.swing.JComboBox<String> cbNama;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
