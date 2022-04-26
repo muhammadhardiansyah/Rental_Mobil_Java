@@ -187,6 +187,7 @@ public class TambahMobil extends javax.swing.JFrame {
         });
 
         lblKet.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
+        lblKet.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -311,11 +312,25 @@ public class TambahMobil extends javax.swing.JFrame {
         String jenis = tfJenis.getText();
         
         Koneksi koneksi = new Koneksi();
-        koneksi.tambahMobil(merk, jenis);
         
-        lblKet.setText("Data berhasil ditambahkan!");
-        tfMerk.setText(null);
-        tfJenis.setText(null);
+        
+        Object[][] dbMobil = koneksi.getDataMobil();
+        boolean cek = false;
+        for (int i = 0; i < koneksi.getCountMobil(); i++){
+            if (merk.equals(dbMobil[i][1])){
+                cek = true;
+            }
+        }
+        
+        if (cek == false){
+            koneksi.tambahMobil(merk, jenis);
+            lblKet.setText("Data berhasil ditambahkan!");
+            tfMerk.setText(null);
+            tfJenis.setText(null);
+        }else {
+            lblKet.setText("Merk telah ada!");
+        }
+        
     }//GEN-LAST:event_tfTambahActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed

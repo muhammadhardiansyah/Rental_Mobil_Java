@@ -199,6 +199,7 @@ public class TambahUser extends javax.swing.JFrame {
         });
 
         lblKeterangan.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
+        lblKeterangan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -233,9 +234,9 @@ public class TambahUser extends javax.swing.JFrame {
                                     .addComponent(tfPassword)
                                     .addComponent(jcAkses, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(134, 134, 134)
-                        .addComponent(lblKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(66, Short.MAX_VALUE))
+                        .addGap(35, 35, 35)
+                        .addComponent(lblKeterangan, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -346,13 +347,29 @@ public class TambahUser extends javax.swing.JFrame {
         String akses = jcAkses.getSelectedItem().toString();
         
         Koneksi koneksi = new Koneksi();
-        koneksi.tambahUser(nama, username, password, akses);
         
-        tfNama.setText(null);
-        tfUsername.setText(null);
-        tfPassword.setText(null);
+        Object[][] dbUser = koneksi.getDataUser();
+        boolean cek = false;
+        for (int i = 0; i < koneksi.getCountUser(); i++){
+            if (username.equals(dbUser[i][0].toString())){
+                cek = true;
+            }if (nama.equals(dbUser[i][1].toString())){
+                cek = true;
+            }
+        }
         
-        lblKeterangan.setText("Data berhasil ditambahkan!");
+        if (cek == false) {
+            koneksi.tambahUser(nama, username, password, akses);
+        
+            tfNama.setText(null);
+            tfUsername.setText(null);
+            tfPassword.setText(null);
+        
+            lblKeterangan.setText("Data berhasil ditambahkan!");
+        }else {
+            lblKeterangan.setText("Username atau nama sudah digunakan!");
+        }
+        
     }//GEN-LAST:event_btnTambahActionPerformed
 
     /**
