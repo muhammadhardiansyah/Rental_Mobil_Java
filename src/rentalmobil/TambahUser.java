@@ -39,6 +39,7 @@ public class TambahUser extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         btnDaftarPeminjaman = new javax.swing.JButton();
         btnTambahMobil = new javax.swing.JButton();
+        btnLogut = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -128,7 +129,7 @@ public class TambahUser extends javax.swing.JFrame {
             }
         });
 
-        btnTambahMobil.setBackground(new java.awt.Color(255, 255, 102));
+        btnTambahMobil.setBackground(new java.awt.Color(255, 153, 0));
         btnTambahMobil.setFont(new java.awt.Font("Square721 BT", 1, 18)); // NOI18N
         btnTambahMobil.setForeground(new java.awt.Color(255, 255, 255));
         btnTambahMobil.setText("Tambah Mobil");
@@ -136,6 +137,17 @@ public class TambahUser extends javax.swing.JFrame {
         btnTambahMobil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTambahMobilActionPerformed(evt);
+            }
+        });
+
+        btnLogut.setBackground(new java.awt.Color(0, 0, 0));
+        btnLogut.setFont(new java.awt.Font("Square721 BT", 1, 18)); // NOI18N
+        btnLogut.setForeground(new java.awt.Color(255, 255, 255));
+        btnLogut.setText("Log Out");
+        btnLogut.setActionCommand("Bua");
+        btnLogut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogutActionPerformed(evt);
             }
         });
 
@@ -154,6 +166,10 @@ public class TambahUser extends javax.swing.JFrame {
                     .addComponent(btnDaftarPeminjaman, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
                     .addComponent(btnTambahMobil, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addComponent(btnLogut, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,9 +182,11 @@ public class TambahUser extends javax.swing.JFrame {
                 .addComponent(btnDaftarPeminjaman, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnTambahMobil, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLogut)
+                .addContainerGap())
         );
 
         jLabel6.setFont(new java.awt.Font("Square721 BT", 1, 24)); // NOI18N
@@ -305,10 +323,12 @@ public class TambahUser extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        this.setState(1);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -351,9 +371,9 @@ public class TambahUser extends javax.swing.JFrame {
         Object[][] dbUser = koneksi.getDataUser();
         boolean cek = false;
         for (int i = 0; i < koneksi.getCountUser(); i++){
-            if (username.equals(dbUser[i][0].toString())){
+            if (username.equals(dbUser[i][1].toString())){
                 cek = true;
-            }if (nama.equals(dbUser[i][1].toString())){
+            } if (nama.equals(dbUser[i][3].toString())){
                 cek = true;
             }
         }
@@ -371,6 +391,16 @@ public class TambahUser extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnTambahActionPerformed
+
+    private void btnLogutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogutActionPerformed
+        // TODO add your handling code here:
+        login idx = new login();
+        idx.setVisible(true);
+        idx.pack();
+        idx.setLocationRelativeTo(null);
+        idx.setDefaultCloseOperation(TambahUser.EXIT_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_btnLogutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -410,6 +440,7 @@ public class TambahUser extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDaftarPeminjaman;
+    private javax.swing.JButton btnLogut;
     private javax.swing.JButton btnTambah;
     private javax.swing.JButton btnTambahMobil;
     private javax.swing.JButton jButton1;

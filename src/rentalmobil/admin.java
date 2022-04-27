@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mysql.Koneksi;
@@ -40,7 +41,7 @@ public class admin extends javax.swing.JFrame {
         model = (DefaultTableModel) tblDaftarPeminjaman.getModel();
         Object[] row;
         for (int i = 0; i < koneksi.getCountPeminjaman(); i++){
-            row = new Object[]{data[i][0],data[i][1],data[i][2],data[i][3],data[i][4]};
+            row = new Object[]{data[i][0],data[i][1],data[i][2],data[i][3],data[i][4],"Rp. " + data[i][5]};
             model.addRow(row);
         }
         
@@ -78,6 +79,7 @@ public class admin extends javax.swing.JFrame {
         btnTambahUser = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         btnTambahMobil = new javax.swing.JButton();
+        btnLogut1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDaftarPeminjaman = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
@@ -171,7 +173,7 @@ public class admin extends javax.swing.JFrame {
             }
         });
 
-        btnTambahMobil.setBackground(new java.awt.Color(255, 255, 102));
+        btnTambahMobil.setBackground(new java.awt.Color(255, 204, 0));
         btnTambahMobil.setFont(new java.awt.Font("Square721 BT", 1, 18)); // NOI18N
         btnTambahMobil.setForeground(new java.awt.Color(255, 255, 255));
         btnTambahMobil.setText("Tambah Mobil");
@@ -179,6 +181,17 @@ public class admin extends javax.swing.JFrame {
         btnTambahMobil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTambahMobilActionPerformed(evt);
+            }
+        });
+
+        btnLogut1.setBackground(new java.awt.Color(0, 0, 0));
+        btnLogut1.setFont(new java.awt.Font("Square721 BT", 1, 18)); // NOI18N
+        btnLogut1.setForeground(new java.awt.Color(255, 255, 255));
+        btnLogut1.setText("Log Out");
+        btnLogut1.setActionCommand("Bua");
+        btnLogut1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogut1ActionPerformed(evt);
             }
         });
 
@@ -197,6 +210,10 @@ public class admin extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(btnTambahMobil, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addComponent(btnLogut1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,7 +228,9 @@ public class admin extends javax.swing.JFrame {
                 .addComponent(btnTambahUser, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnTambahMobil, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLogut1)
+                .addContainerGap())
         );
 
         tblDaftarPeminjaman.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -220,7 +239,7 @@ public class admin extends javax.swing.JFrame {
 
             },
             new String [] {
-                "id", "Nama", "Merk", "Tgl Pinjam", "Tgl Kembali"
+                "id", "Nama", "Merk", "Tgl Pinjam", "Tgl Kembali", "Total Biaya"
             }
         ));
         tblDaftarPeminjaman.setGridColor(new java.awt.Color(255, 255, 255));
@@ -397,10 +416,12 @@ public class admin extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        this.setState(1);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -441,14 +462,18 @@ public class admin extends javax.swing.JFrame {
         Date tgl_Kembali= tglKembali.getDate();
         String strKembali = formater.format(tgl_Kembali);
         
+        long selisihTanggal = Math.abs(tgl_Kembali.getTime() - tgl_Pinjam.getTime());
+        int selisih = (int) (TimeUnit.MILLISECONDS.toDays(selisihTanggal)) + 1;
+        int totalBiaya = selisih * login.hrgRental;  
+        
         try {
-            koneksi.tambahDataPeminjaman(id_peminjaman, id_user, id_mobil, strPinjam, strKembali);
+            koneksi.tambahDataPeminjaman(id_peminjaman, id_user, id_mobil, strPinjam, strKembali, totalBiaya);
         } catch (SQLException ex) {
             System.out.println("Error: "+ ex);
         }
         
         DefaultTableModel tbl = (DefaultTableModel) tblDaftarPeminjaman.getModel();
-        tbl.addRow(new Object[]{id_peminjaman,nama,merk,strPinjam,strKembali});
+        tbl.addRow(new Object[]{id_peminjaman,nama,merk,strPinjam,strKembali,"Rp. " + totalBiaya});
         
         cbNama.setSelectedItem("Choose..");
         cbMerk.setSelectedItem("Choose..");
@@ -477,13 +502,18 @@ public class admin extends javax.swing.JFrame {
         Date tgl_Kembali= tglKembali.getDate();
         String strKembali = formater.format(tgl_Kembali);
         
-        koneksi.ubahDataPeminjaman(id_peminjaman, id_user, id_mobil, strPinjam, strKembali);
+        long selisihTanggal = Math.abs(tgl_Kembali.getTime() - tgl_Pinjam.getTime());
+        int selisih = (int) (TimeUnit.MILLISECONDS.toDays(selisihTanggal)) + 1;
+        int totalBiaya = selisih * login.hrgRental;
+        
+        koneksi.ubahDataPeminjaman(id_peminjaman, id_user, id_mobil, strPinjam, strKembali, totalBiaya);
         
         DefaultTableModel tbl = (DefaultTableModel) tblDaftarPeminjaman.getModel();
         tbl.setValueAt(nama, tblDaftarPeminjaman.getSelectedRow(), 1);
         tbl.setValueAt(merk, tblDaftarPeminjaman.getSelectedRow(), 2);
         tbl.setValueAt(strPinjam, tblDaftarPeminjaman.getSelectedRow(), 3);
         tbl.setValueAt(strKembali, tblDaftarPeminjaman.getSelectedRow(), 4);
+        tbl.setValueAt("Rp. " + totalBiaya, tblDaftarPeminjaman.getSelectedRow(), 5);
         
     }//GEN-LAST:event_btnUbahActionPerformed
 
@@ -536,6 +566,16 @@ public class admin extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tglKembaliMouseClicked
 
+    private void btnLogut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogut1ActionPerformed
+        // TODO add your handling code here:
+        login idx = new login();
+        idx.setVisible(true);
+        idx.pack();
+        idx.setLocationRelativeTo(null);
+        idx.setDefaultCloseOperation(admin.EXIT_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_btnLogut1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -573,6 +613,7 @@ public class admin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHapus;
+    private javax.swing.JButton btnLogut1;
     private javax.swing.JButton btnTambah;
     private javax.swing.JButton btnTambahMobil;
     private javax.swing.JButton btnTambahUser;

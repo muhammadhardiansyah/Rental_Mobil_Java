@@ -5,6 +5,16 @@
  */
 package rentalmobil;
 
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import mysql.Koneksi;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author WINDOWS 10
@@ -14,8 +24,26 @@ public class rental extends javax.swing.JFrame {
     /**
      * Creates new form rental
      */
+    
     public rental() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        
+        lblNamaUser.setText(login.name);
+        
+        //Koneksi database
+        Koneksi koneksi = new Koneksi();
+        
+        Date date = new Date();
+        tglPinjam.getJCalendar().setMinSelectableDate(date);
+        tglKembali.getJCalendar().setMinSelectableDate(date);
+        
+        //Menampilkan dropdown merk
+        Object[][] merk_data = koneksi.getDataMobil();
+        cbMerk.addItem("Choose..");
+        for (int k=0; k < koneksi.getCountMobil();k++){
+            cbMerk.addItem((merk_data[k][1]).toString());
+        }  
     }
 
     /**
@@ -33,19 +61,22 @@ public class rental extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jButton7 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        lblMerk = new javax.swing.JLabel();
+        cbMerk = new javax.swing.JComboBox<>();
+        lblPinjam = new javax.swing.JLabel();
+        lblBiaya = new javax.swing.JLabel();
+        btnCekHarga = new javax.swing.JButton();
+        lblKembali = new javax.swing.JLabel();
+        tglPinjam = new com.toedter.calendar.JDateChooser();
+        tglKembali = new com.toedter.calendar.JDateChooser();
+        btnBuat = new javax.swing.JButton();
+        lblTotalBiaya = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        lblNamaUser = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        btnLogut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,36 +133,49 @@ public class rental extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
-        jLabel3.setText("Merk");
+        lblMerk.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
+        lblMerk.setText("Merk");
 
-        jComboBox1.setFont(new java.awt.Font("Square721 BT", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sedan", "Avanza", "Mercy", "Brio" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        cbMerk.setFont(new java.awt.Font("Square721 BT", 0, 14)); // NOI18N
+        cbMerk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                cbMerkActionPerformed(evt);
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
-        jLabel4.setText("Tgl Pinjam");
+        lblPinjam.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
+        lblPinjam.setText("Tgl Pinjam");
 
-        jLabel5.setFont(new java.awt.Font("Square721 BT", 0, 14)); // NOI18N
-        jLabel5.setText("Biaya: ");
-        jLabel5.setToolTipText("");
+        lblBiaya.setFont(new java.awt.Font("Square721 BT", 0, 14)); // NOI18N
+        lblBiaya.setText("Biaya: ");
+        lblBiaya.setToolTipText("");
 
-        jButton7.setBackground(new java.awt.Color(51, 255, 51));
-        jButton7.setFont(new java.awt.Font("Square721 BT", 0, 14)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Cek Harga");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        btnCekHarga.setBackground(new java.awt.Color(51, 255, 51));
+        btnCekHarga.setFont(new java.awt.Font("Square721 BT", 0, 14)); // NOI18N
+        btnCekHarga.setForeground(new java.awt.Color(255, 255, 255));
+        btnCekHarga.setText("Cek Harga");
+        btnCekHarga.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                btnCekHargaActionPerformed(evt);
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
-        jLabel6.setText("Tgl Kembali");
+        lblKembali.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
+        lblKembali.setText("Tgl Kembali");
+
+        btnBuat.setBackground(new java.awt.Color(51, 255, 255));
+        btnBuat.setFont(new java.awt.Font("Square721 BT", 0, 14)); // NOI18N
+        btnBuat.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuat.setText("Buat Peminjaman");
+        btnBuat.setEnabled(false);
+        btnBuat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuatActionPerformed(evt);
+            }
+        });
+
+        lblTotalBiaya.setFont(new java.awt.Font("Square721 BT", 0, 14)); // NOI18N
+        lblTotalBiaya.setToolTipText("");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -142,30 +186,36 @@ public class rental extends javax.swing.JFrame {
                 .addComponent(jButton6)
                 .addGap(203, 203, 203))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField1))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(37, 37, 37)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(213, 213, 213)
-                        .addComponent(jButton7))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2)))
-                .addContainerGap(120, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(btnCekHarga)
+                        .addGap(39, 39, 39)
+                        .addComponent(btnBuat))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGap(74, 74, 74)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(lblPinjam)
+                                    .addGap(30, 30, 30)
+                                    .addComponent(tglPinjam, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(lblMerk)
+                                    .addGap(37, 37, 37)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel2)
+                                        .addComponent(cbMerk, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(lblBiaya)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(lblTotalBiaya, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                            .addGap(77, 77, 77)
+                            .addComponent(lblKembali)
+                            .addGap(18, 18, 18)
+                            .addComponent(tglKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(132, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,21 +226,25 @@ public class rental extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(37, 37, 37)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblMerk)
+                    .addComponent(cbMerk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblPinjam)
+                    .addComponent(tglPinjam, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblKembali)
+                    .addComponent(tglKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblBiaya, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTotalBiaya, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton7)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCekHarga)
+                    .addComponent(btnBuat))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-user-60.png"))); // NOI18N
@@ -203,8 +257,8 @@ public class rental extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
-        jLabel1.setText("Nama");
+        lblNamaUser.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
+        lblNamaUser.setText("Nama");
 
         jButton4.setBackground(new java.awt.Color(51, 255, 51));
         jButton4.setFont(new java.awt.Font("Square721 BT", 1, 18)); // NOI18N
@@ -226,20 +280,35 @@ public class rental extends javax.swing.JFrame {
             }
         });
 
+        btnLogut.setBackground(new java.awt.Color(0, 0, 0));
+        btnLogut.setFont(new java.awt.Font("Square721 BT", 1, 18)); // NOI18N
+        btnLogut.setForeground(new java.awt.Color(255, 255, 255));
+        btnLogut.setText("Log Out");
+        btnLogut.setActionCommand("Bua");
+        btnLogut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jButton5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE))
+                        .addComponent(lblNamaUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(btnLogut, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,12 +316,14 @@ public class rental extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblNamaUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(106, 106, 106)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(203, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLogut)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -280,10 +351,12 @@ public class rental extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        this.setState(1);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -296,19 +369,86 @@ public class rental extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        user usr = new user();
+        usr.setVisible(true);
+        usr.pack();
+        usr.setLocationRelativeTo(null);
+        usr.setDefaultCloseOperation(rental.EXIT_ON_CLOSE);
+        this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void cbMerkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbMerkActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_cbMerkActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void btnCekHargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCekHargaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+        btnBuat.setEnabled(true);
+        
+        Date tgl_Pinjam = tglPinjam.getDate();
+        Date tgl_Kembali= tglKembali.getDate();
+        
+        long selisihTanggal = Math.abs(tgl_Kembali.getTime() - tgl_Pinjam.getTime());
+        Long selisih = (long) (TimeUnit.MILLISECONDS.toDays(selisihTanggal)) + 1;
+        
+        long totalBiaya = selisih * login.hrgRental;
+        
+        lblTotalBiaya.setText("Rp. " + totalBiaya);
+        
+    }//GEN-LAST:event_btnCekHargaActionPerformed
+
+    private void btnBuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuatActionPerformed
+        // TODO add your handling code here:
+        
+        Koneksi koneksi = new Koneksi();
+        
+        int id_peminjaman = koneksi.getLastIdPeminjaman() + 1;
+        
+        int id_user = Integer.parseInt(login.id);
+        
+        String merk = cbMerk.getSelectedItem().toString();
+        int id_mobil = koneksi.getIdMobil(merk);
+        
+        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
+        
+        Date tgl_Pinjam = tglPinjam.getDate();
+        String strPinjam = formater.format(tgl_Pinjam);
+        
+        Date tgl_Kembali= tglKembali.getDate();
+        String strKembali = formater.format(tgl_Kembali);
+        
+        
+        long selisihTanggal = Math.abs(tgl_Kembali.getTime() - tgl_Pinjam.getTime());
+        int selisih = (int) (TimeUnit.MILLISECONDS.toDays(selisihTanggal)) + 1;
+        int totalBiaya = selisih * login.hrgRental;    
+        
+        try {
+            koneksi.tambahDataPeminjaman(id_peminjaman, id_user, id_mobil, strPinjam, strKembali, totalBiaya);
+        } catch (SQLException ex) {
+            System.out.println("Error: "+ ex);
+        }
+        
+        cbMerk.setSelectedItem("Choose..");
+        tglPinjam.setDate(null);
+        tglKembali.setDate(null);
+        
+        btnBuat.setEnabled(false);
+        lblTotalBiaya.setText(null);
+    }//GEN-LAST:event_btnBuatActionPerformed
+
+    private void btnLogutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogutActionPerformed
+        // TODO add your handling code here:
+        login idx = new login();
+        idx.setVisible(true);
+        idx.pack();
+        idx.setLocationRelativeTo(null);
+        idx.setDefaultCloseOperation(rental.EXIT_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_btnLogutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -336,6 +476,7 @@ public class rental extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(rental.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -346,24 +487,31 @@ public class rental extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuat;
+    private javax.swing.JButton btnCekHarga;
+    private javax.swing.JButton btnLogut;
+    private javax.swing.JComboBox<String> cbMerk;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel lblBiaya;
+    private javax.swing.JLabel lblKembali;
+    private javax.swing.JLabel lblMerk;
+    private javax.swing.JLabel lblNamaUser;
+    private javax.swing.JLabel lblPinjam;
+    private javax.swing.JLabel lblTotalBiaya;
+    private com.toedter.calendar.JDateChooser tglKembali;
+    private com.toedter.calendar.JDateChooser tglPinjam;
     // End of variables declaration//GEN-END:variables
+
+    void DefaultCloseOperation(int EXIT_ON_CLOSE) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

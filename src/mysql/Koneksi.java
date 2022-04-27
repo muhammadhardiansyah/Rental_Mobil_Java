@@ -51,6 +51,19 @@ public class Koneksi {
         return rowCount;
     }
     
+    public int getCountPeminjamanById(String id){
+        int rowCount = 0;
+        try{
+            String q = "select count(*) as jum from peminjaman where id_user = " + id;
+            rs = st.executeQuery(q);
+            rs.next();
+            rowCount = rs.getInt("jum");
+        } catch (SQLException ex) {
+            System.out.println("Error: "+ ex);
+        }
+        return rowCount;
+    }
+    
     public int getCountUser(){
         int rowCount = 0;
         try{
@@ -91,7 +104,7 @@ public class Koneksi {
     }
     
     public Object[][] getDataPeminjaman(){
-        Object[][] row = new Object[1000][5];
+        Object[][] row = new Object[1000][6];
         try {
             String query = "SELECT * FROM peminjaman "
                     + "INNER JOIN mobil ON peminjaman.id_mobil = mobil.id_mobil "
@@ -104,6 +117,7 @@ public class Koneksi {
                 row[i][2] = rs.getString("merk");
                 row[i][3] = rs.getString("tgl_peminjaman");
                 row[i][4] = rs.getString("tgl_kembali");
+                row[i][5] = rs.getString("total_biaya");
                 i++;
             }
         } catch (SQLException ex){
@@ -112,10 +126,56 @@ public class Koneksi {
         return row;
     }
     
+        public Object[][] getDataPeminjamanById(String id){
+        Object[][] row = new Object[1000][6];
+        try {
+            String query = "SELECT * FROM peminjaman "
+                    + "INNER JOIN mobil ON peminjaman.id_mobil = mobil.id_mobil "
+                    + "INNER JOIN user ON peminjaman.id_user = user.id_user "
+                    + "WHERE peminjaman.id_user = " + id
+                    + " ORDER BY id_peminjaman ASC;";
+            rs = st.executeQuery(query);
+            int i = 0;
+            while (rs.next()){
+                row[i][0] = rs.getString("id_peminjaman");
+                row[i][1] = rs.getString("nama");
+                row[i][2] = rs.getString("merk");
+                row[i][3] = rs.getString("tgl_peminjaman");
+                row[i][4] = rs.getString("tgl_kembali");
+                row[i][5] = rs.getString("total_biaya");
+                i++;
+            }
+        } catch (SQLException ex){
+            System.out.println("Error : "+ex);
+        }
+        return row;
+    }
+    
+    
     public Object[][] getDataUser(){
-        Object[][] row = new Object[1000][5];
+        Object[][] row = new Object[1000][6];
         try {
             String query = "SELECT * FROM user";
+            rs = st.executeQuery(query);
+            int i = 0;
+            while (rs.next()){
+                row[i][0] = rs.getString("id_user");
+                row[i][1] = rs.getString("username");
+                row[i][2] = rs.getString("password");
+                row[i][3] = rs.getString("nama");
+                row[i][4] = rs.getString("akses");
+                i++;
+            }
+        } catch (SQLException ex){
+            System.out.println("Error : "+ex);
+        }
+        return row;
+    }
+    
+    public Object[][] getSatuDataUser(String username){
+        Object[][] row = new Object[1000][6];
+        try {
+            String query = "select * FROM user WHERE nama = '"+username+"'";
             rs = st.executeQuery(query);
             int i = 0;
             while (rs.next()){
@@ -176,30 +236,32 @@ public class Koneksi {
         return id_mobil;
     }
     
-    public void tambahDataPeminjaman(int id_peminjaman, int id_user, int id_mobil, String tglPinjam, String tglkembali) throws SQLException{
+    public void tambahDataPeminjaman(int id_peminjaman, int id_user, int id_mobil, String tglPinjam, String tglkembali, int total_biaya) throws SQLException{
         try{
-            String query = "INSERT into peminjaman (id_peminjaman,id_user,id_mobil,tgl_peminjaman,tgl_kembali) values (?,?,?,?,?)";
+            String query = "INSERT into peminjaman (id_peminjaman,id_user,id_mobil,tgl_peminjaman,tgl_kembali,total_biaya) values (?,?,?,?,?,?)";
             PreparedStatement stmt = (PreparedStatement) con.prepareStatement(query);
             stmt.setInt(1, id_peminjaman);
             stmt.setInt(2, id_user);
             stmt.setInt(3, id_mobil);
             stmt.setString(4, tglPinjam);
             stmt.setString(5, tglkembali);
+            stmt.setInt(6, total_biaya);
             stmt.execute();  
         } catch(SQLException ex){
             System.out.println("Error: " + ex);
         }
     }
     
-    public void ubahDataPeminjaman(int id_peminjaman, int id_user, int id_mobil, String tglPinjam, String tglKembali){
+    public void ubahDataPeminjaman(int id_peminjaman, int id_user, int id_mobil, String tglPinjam, String tglKembali, int total_biaya){
         try{
-            String query = "UPDATE peminjaman SET id_user = ?, id_mobil = ?, tgl_peminjaman = ?, tgl_kembali = ? WHERE id_peminjaman = ?";
+            String query = "UPDATE peminjaman SET id_user = ?, id_mobil = ?, tgl_peminjaman = ?, tgl_kembali = ?, total_biaya = ? WHERE id_peminjaman = ?";
             PreparedStatement stmt = (PreparedStatement) con.prepareStatement(query);
             stmt.setInt(1, id_user);
             stmt.setInt(2, id_mobil);
             stmt.setString(3, tglPinjam);
             stmt.setString(4, tglKembali);
-            stmt.setInt(5, id_peminjaman);
+            stmt.setInt(5, total_biaya);
+            stmt.setInt(6, id_peminjaman);
             stmt.execute();  
         } catch(SQLException ex){
             System.out.println("Error: " + ex);
