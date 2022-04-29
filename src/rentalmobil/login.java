@@ -23,6 +23,8 @@ public class login extends javax.swing.JFrame {
     public login() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        this.getRootPane().setDefaultButton(btnMasuk);
     }
 
     /**
@@ -129,6 +131,11 @@ public class login extends javax.swing.JFrame {
         btnMasuk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMasukActionPerformed(evt);
+            }
+        });
+        btnMasuk.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnMasukKeyPressed(evt);
             }
         });
 
@@ -251,26 +258,43 @@ public class login extends javax.swing.JFrame {
 
     private void btnMasukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMasukActionPerformed
         // TODO add your handling code here:
-
-        Koneksi koneksi = new Koneksi();
-
+        
+        // Mengambil data username dan password yang diinput user
         String username = tfUsername.getText();
         String password = String.valueOf(tfPassword.getPassword());
-
-        Object[][] data = koneksi.getSatuDataUser(username);
-
-        String dataUsername = String.valueOf(data[0][1]);
-        String dataPassword = String.valueOf(data[0][2]);
-        String dataAkses = String.valueOf(data[0][4]);
+        
+        // Membuat koneksi database
+        Koneksi koneksi = new Koneksi();
+        
+        // Mencari data di database
+        Object[][] data = koneksi.getDataUser();
+        
+        // Inisialiasi variable
+        String dataId = null;
+        String dataUsername = null;
+        String dataPassword = null;
+        String dataNama = null;
+        String dataAkses = null;
+        
+        // Memasukkan data kedalam variable bila username ditemukan di dalam database
+        for (int i = 0; i < koneksi.getCountUser(); i++){
+            if (username.equals(data[i][1].toString())){
+                dataId = String.valueOf(data[i][0]);
+                dataUsername = String.valueOf(data[i][1]);
+                dataPassword = String.valueOf(data[i][2]);
+                dataNama = String.valueOf(data[i][3]);
+                dataAkses = String.valueOf(data[i][4]);
+            }       
+        }
 
         // Kondisi Bila User memasukkan username dan password dengan benar
         if (username.equals(dataUsername) && password.equals(dataPassword)) {
 
-            // Kondisi bila status akses user adalah User
+            // Kondisi bila status akses adalah User
             if(dataAkses.equals("User")) {
 
-                name = String.valueOf(data[0][3]);
-                id = String.valueOf(data[0][0]);
+                name = dataNama;
+                id = dataId;
 
                 user usr = new user();
                 usr.setVisible(true);
@@ -279,7 +303,7 @@ public class login extends javax.swing.JFrame {
                 usr.setDefaultCloseOperation(login.EXIT_ON_CLOSE);
                 this.dispose();
 
-                // Kondisi bila status akses user adalah Admin
+            // Kondisi bila status akses adalah Admin
             } else if (dataAkses.equals("Admin")) {
                 admin adm = new admin();
                 adm.setVisible(true);
@@ -305,6 +329,11 @@ public class login extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void btnMasukKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnMasukKeyPressed
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_btnMasukKeyPressed
 
     /**
      * @param args the command line arguments

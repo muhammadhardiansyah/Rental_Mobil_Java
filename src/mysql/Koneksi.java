@@ -153,29 +153,9 @@ public class Koneksi {
     
     
     public Object[][] getDataUser(){
-        Object[][] row = new Object[1000][6];
+        Object[][] row = new Object[1000][5];
         try {
             String query = "SELECT * FROM user";
-            rs = st.executeQuery(query);
-            int i = 0;
-            while (rs.next()){
-                row[i][0] = rs.getString("id_user");
-                row[i][1] = rs.getString("username");
-                row[i][2] = rs.getString("password");
-                row[i][3] = rs.getString("nama");
-                row[i][4] = rs.getString("akses");
-                i++;
-            }
-        } catch (SQLException ex){
-            System.out.println("Error : "+ex);
-        }
-        return row;
-    }
-    
-    public Object[][] getSatuDataUser(String username){
-        Object[][] row = new Object[1000][6];
-        try {
-            String query = "select * FROM user WHERE nama = '"+username+"'";
             rs = st.executeQuery(query);
             int i = 0;
             while (rs.next()){
