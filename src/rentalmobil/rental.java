@@ -215,7 +215,7 @@ public class rental extends javax.swing.JFrame {
                             .addComponent(lblKembali)
                             .addGap(18, 18, 18)
                             .addComponent(tglKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(132, Short.MAX_VALUE))
+                .addContainerGap(131, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -387,18 +387,21 @@ public class rental extends javax.swing.JFrame {
 
     private void btnCekHargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCekHargaActionPerformed
         // TODO add your handling code here:
-        btnBuat.setEnabled(true);
-        
+        String merk = cbMerk.getSelectedItem().toString();
         Date tgl_Pinjam = tglPinjam.getDate();
         Date tgl_Kembali= tglKembali.getDate();
         
-        long selisihTanggal = Math.abs(tgl_Kembali.getTime() - tgl_Pinjam.getTime());
-        Long selisih = (long) (TimeUnit.MILLISECONDS.toDays(selisihTanggal)) + 1;
-        
-        long totalBiaya = selisih * login.hrgRental;
-        
-        lblTotalBiaya.setText("Rp. " + totalBiaya);
-        
+        if (merk.equals("Choose..")){
+            lblTotalBiaya.setText("Pastikan data sudah terisi lengkap!");
+        } else {
+            btnBuat.setEnabled(true);
+            long selisihTanggal = Math.abs(tgl_Kembali.getTime() - tgl_Pinjam.getTime());
+            Long selisih = (long) (TimeUnit.MILLISECONDS.toDays(selisihTanggal)) + 1;
+
+            long totalBiaya = selisih * login.hrgRental;
+
+            lblTotalBiaya.setText("Rp. " + totalBiaya);
+        }
     }//GEN-LAST:event_btnCekHargaActionPerformed
 
     private void btnBuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuatActionPerformed

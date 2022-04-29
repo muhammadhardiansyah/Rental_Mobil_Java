@@ -342,14 +342,20 @@ public class TambahMobil extends javax.swing.JFrame {
             }
         }
         
-        if (cek == false){
-            koneksi.tambahMobil(merk, jenis);
-            lblKet.setText("Data berhasil ditambahkan!");
-            tfMerk.setText(null);
-            tfJenis.setText(null);
-        }else {
-            lblKet.setText("Merk telah ada!");
+        if (merk.equals("") || jenis.equals("")){
+            lblKet.setText("Pastikan data sudah terisi lengkap!");
         }
+        else {
+            if (cek == false){
+                koneksi.tambahMobil(merk, jenis);
+                lblKet.setText("Data berhasil ditambahkan!");
+                tfMerk.setText(null);
+                tfJenis.setText(null);
+            }else {
+                lblKet.setText("Merk telah ada!");
+            }
+        }
+        
         
     }//GEN-LAST:event_tfTambahActionPerformed
 

@@ -91,6 +91,7 @@ public class user extends javax.swing.JFrame {
         tglKembali = new com.toedter.calendar.JDateChooser();
         cbMerk = new javax.swing.JComboBox<>();
         lblNamaPengguna = new javax.swing.JLabel();
+        lblKet = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -208,7 +209,7 @@ public class user extends javax.swing.JFrame {
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 215, Short.MAX_VALUE)
                 .addComponent(btnLogut1)
                 .addContainerGap())
         );
@@ -274,35 +275,39 @@ public class user extends javax.swing.JFrame {
         lblNamaPengguna.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
         lblNamaPengguna.setText("Nama");
 
+        lblKet.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
+        lblKet.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(tglKembali, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
-                    .addComponent(tglPinjam, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbMerk, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblNamaPengguna, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addGap(202, 202, 202))
+            .addComponent(lblKet, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(tglKembali, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
+                            .addComponent(tglPinjam, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbMerk, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblNamaPengguna, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(173, 173, 173)
                         .addComponent(btnUbah, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(44, 44, 44)
-                        .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(136, 136, 136))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(202, 202, 202))))
+                        .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -316,7 +321,7 @@ public class user extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(cbMerk, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
+                    .addComponent(cbMerk))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -329,11 +334,13 @@ public class user extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addComponent(jLabel7))
                     .addComponent(tglKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addComponent(lblKet)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnHapus)
                     .addComponent(btnUbah))
-                .addContainerGap())
+                .addGap(28, 28, 28))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -363,8 +370,7 @@ public class user extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -452,14 +458,19 @@ public class user extends javax.swing.JFrame {
         long selisihTanggal = Math.abs(tgl_Kembali.getTime() - tgl_Pinjam.getTime());
         int selisih = (int) (TimeUnit.MILLISECONDS.toDays(selisihTanggal)) + 1;
         int totalBiaya = selisih * login.hrgRental;
+        
+        if (merk.equals("Choose..")){
+            lblKet.setText("Pastikan data sudah terisi lengkap!");
+        }else {
+            koneksi.ubahDataPeminjaman(id_peminjaman, id_user, id_mobil, strPinjam, strKembali, totalBiaya);
 
-        koneksi.ubahDataPeminjaman(id_peminjaman, id_user, id_mobil, strPinjam, strKembali, totalBiaya);
-
-        DefaultTableModel tbl = (DefaultTableModel) tblDaftarPeminjaman.getModel();
-        tbl.setValueAt(merk, tblDaftarPeminjaman.getSelectedRow(), 2);
-        tbl.setValueAt(strPinjam, tblDaftarPeminjaman.getSelectedRow(), 3);
-        tbl.setValueAt(strKembali, tblDaftarPeminjaman.getSelectedRow(), 4);
-        tbl.setValueAt("Rp. " + totalBiaya, tblDaftarPeminjaman.getSelectedRow(), 5);
+            DefaultTableModel tbl = (DefaultTableModel) tblDaftarPeminjaman.getModel();
+            tbl.setValueAt(merk, tblDaftarPeminjaman.getSelectedRow(), 2);
+            tbl.setValueAt(strPinjam, tblDaftarPeminjaman.getSelectedRow(), 3);
+            tbl.setValueAt(strKembali, tblDaftarPeminjaman.getSelectedRow(), 4);
+            tbl.setValueAt("Rp. " + totalBiaya, tblDaftarPeminjaman.getSelectedRow(), 5);
+            lblKet.setText("Data berhasil diperbarui!");
+        }
 
     }//GEN-LAST:event_btnUbahActionPerformed
 
@@ -477,6 +488,7 @@ public class user extends javax.swing.JFrame {
         cbMerk.setSelectedItem("Choose..");
         tglPinjam.setDate(null);
         tglKembali.setDate(null);
+        lblKet.setText("Data berhasil dihapus!");
 
     }//GEN-LAST:event_btnHapusActionPerformed
 
@@ -550,6 +562,7 @@ public class user extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblKet;
     private javax.swing.JLabel lblNamaPengguna;
     private javax.swing.JLabel lblNamaUser;
     private javax.swing.JTable tblDaftarPeminjaman;

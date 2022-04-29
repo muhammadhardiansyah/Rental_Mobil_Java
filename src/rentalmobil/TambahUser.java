@@ -378,18 +378,21 @@ public class TambahUser extends javax.swing.JFrame {
             }
         }
         
-        if (cek == false) {
-            koneksi.tambahUser(nama, username, password, akses);
-        
-            tfNama.setText(null);
-            tfUsername.setText(null);
-            tfPassword.setText(null);
-        
-            lblKeterangan.setText("Data berhasil ditambahkan!");
-        }else {
-            lblKeterangan.setText("Username atau nama sudah digunakan!");
+        if (nama.equals("") || username.equals("") || password.equals("")){
+            lblKeterangan.setText("Pastikan form sudah terisi lengkap!");
+        }else{
+            if (cek == false) {
+                koneksi.tambahUser(nama, username, password, akses);
+
+                tfNama.setText(null);
+                tfUsername.setText(null);
+                tfPassword.setText(null);
+
+                lblKeterangan.setText("Data berhasil ditambahkan!");
+            }else {
+                lblKeterangan.setText("Username atau nama sudah digunakan!");
+            }
         }
-        
     }//GEN-LAST:event_btnTambahActionPerformed
 
     private void btnLogutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogutActionPerformed

@@ -95,6 +95,7 @@ public class admin extends javax.swing.JFrame {
         tglKembali = new com.toedter.calendar.JDateChooser();
         cbNama = new javax.swing.JComboBox<>();
         cbMerk = new javax.swing.JComboBox<>();
+        lblKet = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -228,7 +229,7 @@ public class admin extends javax.swing.JFrame {
                 .addComponent(btnTambahUser, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnTambahMobil, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
                 .addComponent(btnLogut1)
                 .addContainerGap())
         );
@@ -298,11 +299,14 @@ public class admin extends javax.swing.JFrame {
         cbMerk.setFont(new java.awt.Font("Square721 BT", 0, 14)); // NOI18N
         cbMerk.setMaximumRowCount(100);
 
+        lblKet.setFont(new java.awt.Font("Square721 BT", 0, 13)); // NOI18N
+        lblKet.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(117, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
@@ -317,17 +321,20 @@ public class admin extends javax.swing.JFrame {
                         .addGap(88, 88, 88))))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(tglKembali, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
-                    .addComponent(tglPinjam, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbNama, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbMerk, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblKet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(tglKembali, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                            .addComponent(tglPinjam, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbNama, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbMerk, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -337,12 +344,12 @@ public class admin extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbNama, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                    .addComponent(cbNama)
                     .addComponent(jLabel3))
                 .addGap(12, 12, 12)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(cbMerk, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
+                    .addComponent(cbMerk))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -355,7 +362,9 @@ public class admin extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addComponent(jLabel7))
                     .addComponent(tglKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(3, 3, 3)
+                .addComponent(lblKet)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTambah)
                     .addComponent(btnUbah)
@@ -390,10 +399,10 @@ public class admin extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -466,19 +475,24 @@ public class admin extends javax.swing.JFrame {
         int selisih = (int) (TimeUnit.MILLISECONDS.toDays(selisihTanggal)) + 1;
         int totalBiaya = selisih * login.hrgRental;  
         
-        try {
-            koneksi.tambahDataPeminjaman(id_peminjaman, id_user, id_mobil, strPinjam, strKembali, totalBiaya);
-        } catch (SQLException ex) {
-            System.out.println("Error: "+ ex);
+        if (nama.equals("Choose..") || merk.equals("Choose..")){
+            lblKet.setText("Pastikan semua form telah terisi");
+        }
+        else {
+            try {
+                koneksi.tambahDataPeminjaman(id_peminjaman, id_user, id_mobil, strPinjam, strKembali, totalBiaya);
+            }catch (SQLException ex) {
+                System.out.println("Error: "+ ex);
+            }
+            DefaultTableModel tbl = (DefaultTableModel) tblDaftarPeminjaman.getModel();
+            tbl.addRow(new Object[]{id_peminjaman,nama,merk,strPinjam,strKembali,"Rp. " + totalBiaya});
+
+            cbNama.setSelectedItem("Choose..");
+            cbMerk.setSelectedItem("Choose..");
+            tglPinjam.setDate(null);
+            tglKembali.setDate(null);
         }
         
-        DefaultTableModel tbl = (DefaultTableModel) tblDaftarPeminjaman.getModel();
-        tbl.addRow(new Object[]{id_peminjaman,nama,merk,strPinjam,strKembali,"Rp. " + totalBiaya});
-        
-        cbNama.setSelectedItem("Choose..");
-        cbMerk.setSelectedItem("Choose..");
-        tglPinjam.setDate(null);
-        tglKembali.setDate(null);
         
     }//GEN-LAST:event_btnTambahActionPerformed
 
@@ -636,6 +650,7 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblKet;
     private javax.swing.JTable tblDaftarPeminjaman;
     private com.toedter.calendar.JDateChooser tglKembali;
     private com.toedter.calendar.JDateChooser tglPinjam;
