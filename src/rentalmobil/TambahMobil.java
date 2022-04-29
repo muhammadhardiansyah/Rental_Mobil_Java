@@ -333,7 +333,6 @@ public class TambahMobil extends javax.swing.JFrame {
         
         Koneksi koneksi = new Koneksi();
         
-        
         Object[][] dbMobil = koneksi.getDataMobil();
         boolean cek = false;
         for (int i = 0; i < koneksi.getCountMobil(); i++){

@@ -520,14 +520,19 @@ public class admin extends javax.swing.JFrame {
         int selisih = (int) (TimeUnit.MILLISECONDS.toDays(selisihTanggal)) + 1;
         int totalBiaya = selisih * login.hrgRental;
         
-        koneksi.ubahDataPeminjaman(id_peminjaman, id_user, id_mobil, strPinjam, strKembali, totalBiaya);
-        
-        DefaultTableModel tbl = (DefaultTableModel) tblDaftarPeminjaman.getModel();
-        tbl.setValueAt(nama, tblDaftarPeminjaman.getSelectedRow(), 1);
-        tbl.setValueAt(merk, tblDaftarPeminjaman.getSelectedRow(), 2);
-        tbl.setValueAt(strPinjam, tblDaftarPeminjaman.getSelectedRow(), 3);
-        tbl.setValueAt(strKembali, tblDaftarPeminjaman.getSelectedRow(), 4);
-        tbl.setValueAt("Rp. " + totalBiaya, tblDaftarPeminjaman.getSelectedRow(), 5);
+        if (nama.equals("Choose..") || merk.equals("Choose..")){
+            lblKet.setText("Pastikan semua bagian terisi!");
+        } else {
+            koneksi.ubahDataPeminjaman(id_peminjaman, id_user, id_mobil, strPinjam, strKembali, totalBiaya);
+
+            DefaultTableModel tbl = (DefaultTableModel) tblDaftarPeminjaman.getModel();
+            tbl.setValueAt(nama, tblDaftarPeminjaman.getSelectedRow(), 1);
+            tbl.setValueAt(merk, tblDaftarPeminjaman.getSelectedRow(), 2);
+            tbl.setValueAt(strPinjam, tblDaftarPeminjaman.getSelectedRow(), 3);
+            tbl.setValueAt(strKembali, tblDaftarPeminjaman.getSelectedRow(), 4);
+            tbl.setValueAt("Rp. " + totalBiaya, tblDaftarPeminjaman.getSelectedRow(), 5);
+
+        }
         
     }//GEN-LAST:event_btnUbahActionPerformed
 
