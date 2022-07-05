@@ -26,8 +26,9 @@ CREATE TABLE `mobil` (
   `id_mobil` int(255) NOT NULL AUTO_INCREMENT,
   `merk` varchar(255) NOT NULL,
   `jenis` varchar(255) NOT NULL,
+  `no_polisi` varchar(10) NOT NULL,
   PRIMARY KEY (`id_mobil`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +37,7 @@ CREATE TABLE `mobil` (
 
 LOCK TABLES `mobil` WRITE;
 /*!40000 ALTER TABLE `mobil` DISABLE KEYS */;
-INSERT INTO `mobil` VALUES (1,'Avanza','Minibus'),(2,'Mitshubishi','Regular'),(3,'Mercy','Premium'),(4,'Kijang','Regular');
+INSERT INTO `mobil` VALUES (10,'Suzuki','SUV','DD5657KK');
 /*!40000 ALTER TABLE `mobil` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -55,7 +56,7 @@ CREATE TABLE `peminjaman` (
   `tgl_kembali` varchar(255) NOT NULL,
   `total_biaya` int(11) NOT NULL,
   PRIMARY KEY (`id_peminjaman`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +65,7 @@ CREATE TABLE `peminjaman` (
 
 LOCK TABLES `peminjaman` WRITE;
 /*!40000 ALTER TABLE `peminjaman` DISABLE KEYS */;
-INSERT INTO `peminjaman` VALUES (1,1,1,'27-04-2002','29-04-2002',300000),(2,1,3,'28-04-2022','01-05-2022',400000),(3,3,4,'28-04-2022','28-04-2022',100000),(4,2,2,'28-04-2022','30-04-2022',300000),(5,4,1,'27-04-2022','29-04-2022',300000),(6,1,2,'30-04-2022','02-05-2022',300000),(7,1,4,'28-04-2022','28-04-2022',100000);
+INSERT INTO `peminjaman` VALUES (18,1,10,'08-07-2022','09-07-2022',200000);
 /*!40000 ALTER TABLE `peminjaman` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,7 +83,7 @@ CREATE TABLE `user` (
   `nama` varchar(255) NOT NULL,
   `akses` varchar(255) NOT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,4 +105,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-27 20:14:47
+-- Dump completed on 2022-07-05 21:06:59

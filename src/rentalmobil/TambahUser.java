@@ -52,6 +52,7 @@ public class TambahUser extends javax.swing.JFrame {
         jcAkses = new javax.swing.JComboBox<>();
         btnTambah = new javax.swing.JButton();
         lblKeterangan = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -111,7 +112,7 @@ public class TambahUser extends javax.swing.JFrame {
         jButton4.setBackground(new java.awt.Color(51, 255, 51));
         jButton4.setFont(new java.awt.Font("Square721 BT", 1, 18)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Buat User");
+        jButton4.setText("Daftar User");
         jButton4.setActionCommand("Bua");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -132,7 +133,7 @@ public class TambahUser extends javax.swing.JFrame {
         btnTambahMobil.setBackground(new java.awt.Color(255, 153, 0));
         btnTambahMobil.setFont(new java.awt.Font("Square721 BT", 1, 18)); // NOI18N
         btnTambahMobil.setForeground(new java.awt.Color(255, 255, 255));
-        btnTambahMobil.setText("Tambah Mobil");
+        btnTambahMobil.setText("Daftar Mobil");
         btnTambahMobil.setActionCommand("Bua");
         btnTambahMobil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,6 +206,11 @@ public class TambahUser extends javax.swing.JFrame {
         jLabel10.setText("Akses");
 
         jcAkses.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Admin" }));
+        jcAkses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcAksesActionPerformed(evt);
+            }
+        });
 
         btnTambah.setBackground(new java.awt.Color(0, 255, 0));
         btnTambah.setFont(new java.awt.Font("Square721 BT", 1, 14)); // NOI18N
@@ -284,6 +290,16 @@ public class TambahUser extends javax.swing.JFrame {
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/left-arrow (1).png"))); // NOI18N
+        jButton5.setBorderPainted(false);
+        jButton5.setContentAreaFilled(false);
+        jButton5.setRequestFocusEnabled(false);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -291,16 +307,20 @@ public class TambahUser extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(71, 71, 71)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addGap(63, 63, 63))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -351,7 +371,7 @@ public class TambahUser extends javax.swing.JFrame {
 
     private void btnTambahMobilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahMobilActionPerformed
         // TODO add your handling code here:
-        TambahMobil tm = new TambahMobil();
+        DaftarMobil tm = new DaftarMobil();
         tm.setVisible(true);
         tm.pack();
         tm.setLocationRelativeTo(null);
@@ -378,18 +398,21 @@ public class TambahUser extends javax.swing.JFrame {
             }
         }
         
-        if (cek == false) {
-            koneksi.tambahUser(nama, username, password, akses);
-        
-            tfNama.setText(null);
-            tfUsername.setText(null);
-            tfPassword.setText(null);
-        
-            lblKeterangan.setText("Data berhasil ditambahkan!");
-        }else {
-            lblKeterangan.setText("Username atau nama sudah digunakan!");
+        if (nama.equals("") || username.equals("") || password.equals("")){
+            lblKeterangan.setText("Pastikan form sudah terisi lengkap!");
+        }else{
+            if (cek == false) {
+                koneksi.tambahUser(nama, username, password, akses);
+
+                tfNama.setText(null);
+                tfUsername.setText(null);
+                tfPassword.setText(null);
+
+                lblKeterangan.setText("Data berhasil ditambahkan!");
+            }else {
+                lblKeterangan.setText("Username atau nama sudah digunakan!");
+            }
         }
-        
     }//GEN-LAST:event_btnTambahActionPerformed
 
     private void btnLogutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogutActionPerformed
@@ -401,6 +424,20 @@ public class TambahUser extends javax.swing.JFrame {
         idx.setDefaultCloseOperation(TambahUser.EXIT_ON_CLOSE);
         this.dispose();
     }//GEN-LAST:event_btnLogutActionPerformed
+
+    private void jcAksesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcAksesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcAksesActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        DaftarUser idx = new DaftarUser();
+        idx.setVisible(true);
+        idx.pack();
+        idx.setLocationRelativeTo(null);
+        idx.setDefaultCloseOperation(TambahUser.EXIT_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -447,6 +484,7 @@ public class TambahUser extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel6;

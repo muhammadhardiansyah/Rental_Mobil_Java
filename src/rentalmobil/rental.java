@@ -42,7 +42,7 @@ public class rental extends javax.swing.JFrame {
         Object[][] merk_data = koneksi.getDataMobil();
         cbMerk.addItem("Choose..");
         for (int k=0; k < koneksi.getCountMobil();k++){
-            cbMerk.addItem((merk_data[k][1]).toString());
+            cbMerk.addItem(merk_data[k][3] + " (" + merk_data[k][1] + " - " + merk_data[k][2] + ")");
         }  
     }
 
@@ -134,7 +134,7 @@ public class rental extends javax.swing.JFrame {
         });
 
         lblMerk.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
-        lblMerk.setText("Merk");
+        lblMerk.setText("Mobil");
 
         cbMerk.setFont(new java.awt.Font("Square721 BT", 0, 14)); // NOI18N
         cbMerk.addActionListener(new java.awt.event.ActionListener() {
@@ -186,36 +186,36 @@ public class rental extends javax.swing.JFrame {
                 .addComponent(jButton6)
                 .addGap(203, 203, 203))
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(74, 74, 74)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnCekHarga)
-                        .addGap(39, 39, 39)
-                        .addComponent(btnBuat))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGap(74, 74, 74)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addComponent(lblPinjam)
                                     .addGap(30, 30, 30)
-                                    .addComponent(tglPinjam, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(tglPinjam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addComponent(lblMerk)
                                     .addGap(37, 37, 37)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel2)
-                                        .addComponent(cbMerk, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(lblBiaya)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(lblTotalBiaya, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                            .addGap(77, 77, 77)
-                            .addComponent(lblKembali)
-                            .addGap(18, 18, 18)
-                            .addComponent(tglKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(132, Short.MAX_VALUE))
+                                        .addComponent(cbMerk, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                    .addComponent(btnCekHarga)
+                                    .addGap(39, 39, 39)
+                                    .addComponent(btnBuat)
+                                    .addGap(19, 19, 19)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(lblKembali)
+                                .addGap(18, 18, 18)
+                                .addComponent(tglKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblBiaya)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblTotalBiaya, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(53, 53, 53))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -387,18 +387,21 @@ public class rental extends javax.swing.JFrame {
 
     private void btnCekHargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCekHargaActionPerformed
         // TODO add your handling code here:
-        btnBuat.setEnabled(true);
-        
+        String merk = cbMerk.getSelectedItem().toString();
         Date tgl_Pinjam = tglPinjam.getDate();
         Date tgl_Kembali= tglKembali.getDate();
         
-        long selisihTanggal = Math.abs(tgl_Kembali.getTime() - tgl_Pinjam.getTime());
-        Long selisih = (long) (TimeUnit.MILLISECONDS.toDays(selisihTanggal)) + 1;
-        
-        long totalBiaya = selisih * login.hrgRental;
-        
-        lblTotalBiaya.setText("Rp. " + totalBiaya);
-        
+        if (merk.equals("Choose..")){
+            lblTotalBiaya.setText("Pastikan data sudah terisi lengkap!");
+        } else {
+            btnBuat.setEnabled(true);
+            long selisihTanggal = Math.abs(tgl_Kembali.getTime() - tgl_Pinjam.getTime());
+            Long selisih = (long) (TimeUnit.MILLISECONDS.toDays(selisihTanggal)) + 1;
+
+            long totalBiaya = selisih * login.hrgRental;
+
+            lblTotalBiaya.setText("Rp. " + totalBiaya);
+        }
     }//GEN-LAST:event_btnCekHargaActionPerformed
 
     private void btnBuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuatActionPerformed
@@ -410,8 +413,11 @@ public class rental extends javax.swing.JFrame {
         
         int id_user = Integer.parseInt(login.id);
         
-        String merk = cbMerk.getSelectedItem().toString();
-        int id_mobil = koneksi.getIdMobil(merk);
+        String str_mobil = cbMerk.getSelectedItem().toString();
+        String[] mobil = str_mobil.split(" ");
+        String no_polisi = mobil[0];
+        int id_mobil = koneksi.getIdMobil(no_polisi);
+       
         
         SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
         

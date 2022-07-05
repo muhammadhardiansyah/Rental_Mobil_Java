@@ -31,32 +31,32 @@ public class admin extends javax.swing.JFrame {
         Date date = new Date();
         tglPinjam.getJCalendar().setMinSelectableDate(date);
         tglKembali.getJCalendar().setMinSelectableDate(date);
-        
+
         //Koneksi database
         Koneksi koneksi = new Koneksi();
-        
+
         //Menampilkan tabel data peminjaman
-        Object [][] data = koneksi.getDataPeminjaman();
+        Object[][] data = koneksi.getDataPeminjaman();
         DefaultTableModel model;
         model = (DefaultTableModel) tblDaftarPeminjaman.getModel();
         Object[] row;
-        for (int i = 0; i < koneksi.getCountPeminjaman(); i++){
-            row = new Object[]{data[i][0],data[i][1],data[i][2],data[i][3],data[i][4],"Rp. " + data[i][5]};
+        for (int i = 0; i < koneksi.getCountPeminjaman(); i++) {
+            row = new Object[]{data[i][0], data[i][1], data[i][7], data[i][3], data[i][4], "Rp. " + data[i][5]};
             model.addRow(row);
         }
-        
+
         //Menampilkan dropdown user
         Object[][] user_data = koneksi.getDataUser();
         cbNama.addItem("Choose..");
-        for (int j=0; j < koneksi.getCountUser();j++){
+        for (int j = 0; j < koneksi.getCountUser(); j++) {
             cbNama.addItem((user_data[j][3]).toString());
         }
-        
+
         //Menampilkan dropdown merk
         Object[][] merk_data = koneksi.getDataMobil();
         cbMerk.addItem("Choose..");
-        for (int k=0; k < koneksi.getCountMobil();k++){
-            cbMerk.addItem((merk_data[k][1]).toString());
+        for (int k = 0; k < koneksi.getCountMobil(); k++) {
+            cbMerk.addItem(merk_data[k][3] + " (" + merk_data[k][1] + " - " + merk_data[k][2] + ")");
         }
     }
 
@@ -95,6 +95,7 @@ public class admin extends javax.swing.JFrame {
         tglKembali = new com.toedter.calendar.JDateChooser();
         cbNama = new javax.swing.JComboBox<>();
         cbMerk = new javax.swing.JComboBox<>();
+        lblKet = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -155,7 +156,7 @@ public class admin extends javax.swing.JFrame {
         btnTambahUser.setBackground(new java.awt.Color(51, 255, 51));
         btnTambahUser.setFont(new java.awt.Font("Square721 BT", 1, 18)); // NOI18N
         btnTambahUser.setForeground(new java.awt.Color(255, 255, 255));
-        btnTambahUser.setText("Buat User");
+        btnTambahUser.setText("Daftar User");
         btnTambahUser.setActionCommand("Bua");
         btnTambahUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,10 +174,10 @@ public class admin extends javax.swing.JFrame {
             }
         });
 
-        btnTambahMobil.setBackground(new java.awt.Color(255, 204, 0));
+        btnTambahMobil.setBackground(new java.awt.Color(255, 153, 0));
         btnTambahMobil.setFont(new java.awt.Font("Square721 BT", 1, 18)); // NOI18N
         btnTambahMobil.setForeground(new java.awt.Color(255, 255, 255));
-        btnTambahMobil.setText("Tambah Mobil");
+        btnTambahMobil.setText("Daftar Mobil");
         btnTambahMobil.setActionCommand("Bua");
         btnTambahMobil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -228,7 +229,7 @@ public class admin extends javax.swing.JFrame {
                 .addComponent(btnTambahUser, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnTambahMobil, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
                 .addComponent(btnLogut1)
                 .addContainerGap())
         );
@@ -239,7 +240,7 @@ public class admin extends javax.swing.JFrame {
 
             },
             new String [] {
-                "id", "Nama", "Merk", "Tgl Pinjam", "Tgl Kembali", "Total Biaya"
+                "id", "Nama", "Mobil", "Tgl Pinjam", "Tgl Kembali", "Total Biaya"
             }
         ));
         tblDaftarPeminjaman.setGridColor(new java.awt.Color(255, 255, 255));
@@ -294,16 +295,24 @@ public class admin extends javax.swing.JFrame {
 
         cbNama.setFont(new java.awt.Font("Square721 BT", 0, 14)); // NOI18N
         cbNama.setMaximumRowCount(100);
+        cbNama.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbNamaActionPerformed(evt);
+            }
+        });
 
         cbMerk.setFont(new java.awt.Font("Square721 BT", 0, 14)); // NOI18N
         cbMerk.setMaximumRowCount(100);
+
+        lblKet.setFont(new java.awt.Font("Square721 BT", 0, 13)); // NOI18N
+        lblKet.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(117, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(123, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -317,17 +326,20 @@ public class admin extends javax.swing.JFrame {
                         .addGap(88, 88, 88))))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(tglKembali, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
-                    .addComponent(tglPinjam, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbNama, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbMerk, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblKet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(tglKembali, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                            .addComponent(tglPinjam, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbNama, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbMerk, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -337,12 +349,12 @@ public class admin extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbNama, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                    .addComponent(cbNama)
                     .addComponent(jLabel3))
                 .addGap(12, 12, 12)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(cbMerk, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
+                    .addComponent(cbMerk))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -355,11 +367,13 @@ public class admin extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addComponent(jLabel7))
                     .addComponent(tglKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(3, 3, 3)
+                .addComponent(lblKet)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTambah)
-                    .addComponent(btnUbah)
-                    .addComponent(btnHapus))
+                    .addComponent(btnHapus)
+                    .addComponent(btnUbah, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -390,10 +404,10 @@ public class admin extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -430,7 +444,7 @@ public class admin extends javax.swing.JFrame {
 
     private void btnTambahUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahUserActionPerformed
         // TODO add your handling code here:
-        TambahUser tu = new TambahUser();
+        DaftarUser tu = new DaftarUser();
         tu.setVisible(true);
         tu.pack();
         tu.setLocationRelativeTo(null);
@@ -445,100 +459,117 @@ public class admin extends javax.swing.JFrame {
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
         // TODO add your handling code here:
         Koneksi koneksi = new Koneksi();
-        
+
         int id_peminjaman = koneksi.getLastIdPeminjaman() + 1;
-        
+
         String nama = cbNama.getSelectedItem().toString();
         int id_user = koneksi.getIdUser(nama);
-        
-        String merk = cbMerk.getSelectedItem().toString();
-        int id_mobil = koneksi.getIdMobil(merk);
-        
+
+        String str_mobil = cbMerk.getSelectedItem().toString();
+        String[] mobil = str_mobil.split(" ");
+        String no_polisi = mobil[0];
+        int id_mobil = koneksi.getIdMobil(no_polisi);
+
+        String merk = mobil[1].substring(1, mobil[1].length());
+
         SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
-        
+
         Date tgl_Pinjam = tglPinjam.getDate();
         String strPinjam = formater.format(tgl_Pinjam);
-        
-        Date tgl_Kembali= tglKembali.getDate();
+
+        Date tgl_Kembali = tglKembali.getDate();
         String strKembali = formater.format(tgl_Kembali);
-        
+
         long selisihTanggal = Math.abs(tgl_Kembali.getTime() - tgl_Pinjam.getTime());
         int selisih = (int) (TimeUnit.MILLISECONDS.toDays(selisihTanggal)) + 1;
-        int totalBiaya = selisih * login.hrgRental;  
-        
-        try {
-            koneksi.tambahDataPeminjaman(id_peminjaman, id_user, id_mobil, strPinjam, strKembali, totalBiaya);
-        } catch (SQLException ex) {
-            System.out.println("Error: "+ ex);
+        int totalBiaya = selisih * login.hrgRental;
+
+        if (nama.equals("Choose..") || str_mobil.equals("Choose..")){
+            lblKet.setText("Pastikan semua form telah terisi");
         }
-        
-        DefaultTableModel tbl = (DefaultTableModel) tblDaftarPeminjaman.getModel();
-        tbl.addRow(new Object[]{id_peminjaman,nama,merk,strPinjam,strKembali,"Rp. " + totalBiaya});
-        
-        cbNama.setSelectedItem("Choose..");
-        cbMerk.setSelectedItem("Choose..");
-        tglPinjam.setDate(null);
-        tglKembali.setDate(null);
-        
+        else {
+            try {
+                koneksi.tambahDataPeminjaman(id_peminjaman, id_user, id_mobil, strPinjam, strKembali, totalBiaya);
+            }catch (SQLException ex) {
+                System.out.println("Error: "+ ex);
+            }
+            DefaultTableModel tbl = (DefaultTableModel) tblDaftarPeminjaman.getModel();
+            tbl.addRow(new Object[]{id_peminjaman,nama,merk,strPinjam,strKembali,"Rp. " + totalBiaya});
+
+            cbNama.setSelectedItem("Choose..");
+            cbMerk.setSelectedItem("Choose..");
+            tglPinjam.setDate(null);
+            tglKembali.setDate(null);
+        }
     }//GEN-LAST:event_btnTambahActionPerformed
 
     private void btnUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUbahActionPerformed
         // TODO add your handling code here:
         Koneksi koneksi = new Koneksi();
-        
+
         int id_peminjaman = Integer.parseInt(tblDaftarPeminjaman.getValueAt(tblDaftarPeminjaman.getSelectedRow(), 0).toString());
-        
+
         String nama = cbNama.getSelectedItem().toString();
         int id_user = koneksi.getIdUser(nama);
         
-        String merk = cbMerk.getSelectedItem().toString();
-        int id_mobil = koneksi.getIdMobil(merk);
+        String str_mobil = cbMerk.getSelectedItem().toString();
+        String[] mobil = str_mobil.split(" ");
         
+        String no_polisi = mobil[0];
+        int id_mobil = koneksi.getIdMobil(no_polisi);
+
+        String merk = mobil[1].substring(1, mobil[1].length());
+
         SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
-        
+
         Date tgl_Pinjam = tglPinjam.getDate();
         String strPinjam = formater.format(tgl_Pinjam);
-        
-        Date tgl_Kembali= tglKembali.getDate();
+
+        Date tgl_Kembali = tglKembali.getDate();
         String strKembali = formater.format(tgl_Kembali);
-        
+
         long selisihTanggal = Math.abs(tgl_Kembali.getTime() - tgl_Pinjam.getTime());
         int selisih = (int) (TimeUnit.MILLISECONDS.toDays(selisihTanggal)) + 1;
         int totalBiaya = selisih * login.hrgRental;
-        
-        koneksi.ubahDataPeminjaman(id_peminjaman, id_user, id_mobil, strPinjam, strKembali, totalBiaya);
-        
-        DefaultTableModel tbl = (DefaultTableModel) tblDaftarPeminjaman.getModel();
-        tbl.setValueAt(nama, tblDaftarPeminjaman.getSelectedRow(), 1);
-        tbl.setValueAt(merk, tblDaftarPeminjaman.getSelectedRow(), 2);
-        tbl.setValueAt(strPinjam, tblDaftarPeminjaman.getSelectedRow(), 3);
-        tbl.setValueAt(strKembali, tblDaftarPeminjaman.getSelectedRow(), 4);
-        tbl.setValueAt("Rp. " + totalBiaya, tblDaftarPeminjaman.getSelectedRow(), 5);
-        
+
+        if (nama.equals("Choose..") || merk.equals("Choose..")) {
+            lblKet.setText("Pastikan semua bagian terisi!");
+        } else {
+            koneksi.ubahDataPeminjaman(id_peminjaman, id_user, id_mobil, strPinjam, strKembali, totalBiaya);
+
+            DefaultTableModel tbl = (DefaultTableModel) tblDaftarPeminjaman.getModel();
+            tbl.setValueAt(nama, tblDaftarPeminjaman.getSelectedRow(), 1);
+            tbl.setValueAt(merk, tblDaftarPeminjaman.getSelectedRow(), 2);
+            tbl.setValueAt(strPinjam, tblDaftarPeminjaman.getSelectedRow(), 3);
+            tbl.setValueAt(strKembali, tblDaftarPeminjaman.getSelectedRow(), 4);
+            tbl.setValueAt("Rp. " + totalBiaya, tblDaftarPeminjaman.getSelectedRow(), 5);
+
+        }
+
     }//GEN-LAST:event_btnUbahActionPerformed
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         // TODO add your handling code here:
         Koneksi koneksi = new Koneksi();
-        
+
         int id_peminjaman = Integer.parseInt(tblDaftarPeminjaman.getValueAt(tblDaftarPeminjaman.getSelectedRow(), 0).toString());
-        
+
         koneksi.hapusDataPeminjaman(id_peminjaman);
-        
+
         DefaultTableModel tbl = (DefaultTableModel) tblDaftarPeminjaman.getModel();
         tbl.removeRow(tblDaftarPeminjaman.getSelectedRow());
-        
+
         cbNama.setSelectedItem("Choose..");
         cbMerk.setSelectedItem("Choose..");
         tglPinjam.setDate(null);
         tglKembali.setDate(null);
-        
-       
+
+
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void btnTambahMobilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahMobilActionPerformed
         // TODO add your handling code here:
-        TambahMobil tm = new TambahMobil();
+        DaftarMobil tm = new DaftarMobil();
         tm.setVisible(true);
         tm.pack();
         tm.setLocationRelativeTo(null);
@@ -548,13 +579,24 @@ public class admin extends javax.swing.JFrame {
 
     private void tblDaftarPeminjamanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDaftarPeminjamanMouseClicked
         // TODO add your handling code here:
+        
+        Koneksi koneksi = new Koneksi();
+        
         cbNama.setSelectedItem(tblDaftarPeminjaman.getValueAt(tblDaftarPeminjaman.getSelectedRow(), 1).toString());
-        cbMerk.setSelectedItem(tblDaftarPeminjaman.getValueAt(tblDaftarPeminjaman.getSelectedRow(), 2).toString());
+        
+        String no_polisi = tblDaftarPeminjaman.getValueAt(tblDaftarPeminjaman.getSelectedRow(), 2).toString();  
+        Object [][] data = koneksi.getDataMobil();
+        for (int i = 0; i < koneksi.getCountMobil(); i++){
+            if (no_polisi.equals(data[i][3])){
+                cbMerk.setSelectedItem(no_polisi + " (" + data[i][1] + " - " + data[i][2] + ")");
+            }
+        }
+        
         try {
             DefaultTableModel table = (DefaultTableModel) tblDaftarPeminjaman.getModel();
             int selectedRow = tblDaftarPeminjaman.getSelectedRow();
-            Date pinjam = new SimpleDateFormat("dd-MM-yyyy").parse((String)table.getValueAt(selectedRow, 3).toString());
-            Date kembali = new SimpleDateFormat("dd-MM-yyyy").parse((String)table.getValueAt(selectedRow, 4).toString());
+            Date pinjam = new SimpleDateFormat("dd-MM-yyyy").parse((String) table.getValueAt(selectedRow, 3).toString());
+            Date kembali = new SimpleDateFormat("dd-MM-yyyy").parse((String) table.getValueAt(selectedRow, 4).toString());
             tglPinjam.setDate(pinjam);
             tglKembali.setDate(kembali);
         } catch (ParseException ex) {
@@ -575,6 +617,10 @@ public class admin extends javax.swing.JFrame {
         idx.setDefaultCloseOperation(admin.EXIT_ON_CLOSE);
         this.dispose();
     }//GEN-LAST:event_btnLogut1ActionPerformed
+
+    private void cbNamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNamaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbNamaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -636,6 +682,7 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblKet;
     private javax.swing.JTable tblDaftarPeminjaman;
     private com.toedter.calendar.JDateChooser tglKembali;
     private com.toedter.calendar.JDateChooser tglPinjam;

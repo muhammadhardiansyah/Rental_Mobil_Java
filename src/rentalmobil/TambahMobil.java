@@ -48,6 +48,9 @@ public class TambahMobil extends javax.swing.JFrame {
         tfJenis = new javax.swing.JTextField();
         tfTambah = new javax.swing.JButton();
         lblKet = new javax.swing.JLabel();
+        tfNopolisi = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,7 +120,7 @@ public class TambahMobil extends javax.swing.JFrame {
         jButton9.setBackground(new java.awt.Color(255, 153, 0));
         jButton9.setFont(new java.awt.Font("Square721 BT", 1, 18)); // NOI18N
         jButton9.setForeground(new java.awt.Color(255, 255, 255));
-        jButton9.setText("Tambah Mobil");
+        jButton9.setText("Daftar Mobil");
         jButton9.setActionCommand("Bua");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,7 +131,7 @@ public class TambahMobil extends javax.swing.JFrame {
         btnBuatUser.setBackground(new java.awt.Color(51, 255, 51));
         btnBuatUser.setFont(new java.awt.Font("Square721 BT", 1, 18)); // NOI18N
         btnBuatUser.setForeground(new java.awt.Color(255, 255, 255));
-        btnBuatUser.setText("Buat User");
+        btnBuatUser.setText("Daftar User");
         btnBuatUser.setActionCommand("Bua");
         btnBuatUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -180,7 +183,7 @@ public class TambahMobil extends javax.swing.JFrame {
                 .addComponent(btnBuatUser, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
                 .addComponent(btnLogut)
                 .addGap(17, 17, 17))
         );
@@ -207,6 +210,9 @@ public class TambahMobil extends javax.swing.JFrame {
         lblKet.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
         lblKet.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
+        jLabel9.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
+        jLabel9.setText("No. Polisi");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -221,19 +227,25 @@ public class TambahMobil extends javax.swing.JFrame {
                         .addComponent(tfTambah)
                         .addGap(169, 169, 169))))
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(83, 83, 83)
+                .addGap(35, 35, 35)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblKet, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(tfMerk, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(tfJenis, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
+                        .addComponent(jLabel9)
                         .addGap(18, 18, 18)
-                        .addComponent(tfMerk, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblKet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tfJenis, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE))))
-                .addContainerGap(66, Short.MAX_VALUE))
+                        .addComponent(tfNopolisi, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -248,12 +260,26 @@ public class TambahMobil extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(tfJenis, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblKet)
-                .addGap(8, 8, 8)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfNopolisi, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addGap(18, 18, 18)
+                .addComponent(lblKet, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addGap(24, 24, 24)
                 .addComponent(tfTambah)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
         );
+
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/left-arrow (1).png"))); // NOI18N
+        jButton5.setBorderPainted(false);
+        jButton5.setContentAreaFilled(false);
+        jButton5.setRequestFocusEnabled(false);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -261,17 +287,24 @@ public class TambahMobil extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton5)))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(120, 120, 120)
+                .addContainerGap()
+                .addComponent(jButton5)
+                .addGap(23, 23, 23)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(158, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -308,7 +341,7 @@ public class TambahMobil extends javax.swing.JFrame {
 
     private void btnBuatUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuatUserActionPerformed
         // TODO add your handling code here:
-        TambahUser tu = new TambahUser();
+        DaftarUser tu = new DaftarUser();
         tu.setVisible(true);
         tu.pack();
         tu.setLocationRelativeTo(null);
@@ -330,26 +363,33 @@ public class TambahMobil extends javax.swing.JFrame {
         // TODO add your handling code here:
         String merk = tfMerk.getText();
         String jenis = tfJenis.getText();
+        String no_polisi = tfNopolisi.getText();
         
         Koneksi koneksi = new Koneksi();
-        
         
         Object[][] dbMobil = koneksi.getDataMobil();
         boolean cek = false;
         for (int i = 0; i < koneksi.getCountMobil(); i++){
-            if (merk.equals(dbMobil[i][1])){
+            if (no_polisi.equals(dbMobil[i][3])){
                 cek = true;
             }
         }
         
-        if (cek == false){
-            koneksi.tambahMobil(merk, jenis);
-            lblKet.setText("Data berhasil ditambahkan!");
-            tfMerk.setText(null);
-            tfJenis.setText(null);
-        }else {
-            lblKet.setText("Merk telah ada!");
+        if (merk.equals("") || jenis.equals("")){
+            lblKet.setText("Pastikan data sudah terisi lengkap!");
         }
+        else {
+            if (cek == false){
+                koneksi.tambahMobil(merk, jenis, no_polisi);
+                lblKet.setText("Data berhasil ditambahkan!");
+                tfMerk.setText(null);
+                tfJenis.setText(null);
+                tfNopolisi.setText(null);
+            }else {
+                lblKet.setText("Mobil dengan No. Polisi ini sudah ada!");
+            }
+        }
+        
         
     }//GEN-LAST:event_tfTambahActionPerformed
 
@@ -366,6 +406,16 @@ public class TambahMobil extends javax.swing.JFrame {
         idx.setDefaultCloseOperation(TambahMobil.EXIT_ON_CLOSE);
         this.dispose();
     }//GEN-LAST:event_btnLogutActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        DaftarMobil idx = new DaftarMobil();
+        idx.setVisible(true);
+        idx.pack();
+        idx.setLocationRelativeTo(null);
+        idx.setDefaultCloseOperation(TambahMobil.EXIT_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -412,11 +462,13 @@ public class TambahMobil extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -424,6 +476,7 @@ public class TambahMobil extends javax.swing.JFrame {
     private javax.swing.JLabel lblKet;
     private javax.swing.JTextField tfJenis;
     private javax.swing.JTextField tfMerk;
+    private javax.swing.JTextField tfNopolisi;
     private javax.swing.JButton tfTambah;
     // End of variables declaration//GEN-END:variables
 }
