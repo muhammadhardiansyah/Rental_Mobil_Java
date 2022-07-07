@@ -163,6 +163,12 @@ public class rental extends javax.swing.JFrame {
         lblKembali.setFont(new java.awt.Font("Square721 BT", 0, 18)); // NOI18N
         lblKembali.setText("Tgl Kembali");
 
+        tglKembali.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tglKembaliMouseClicked(evt);
+            }
+        });
+
         btnBuat.setBackground(new java.awt.Color(51, 255, 255));
         btnBuat.setFont(new java.awt.Font("Square721 BT", 0, 14)); // NOI18N
         btnBuat.setForeground(new java.awt.Color(255, 255, 255));
@@ -443,7 +449,7 @@ public class rental extends javax.swing.JFrame {
         tglKembali.setDate(null);
         
         btnBuat.setEnabled(false);
-        lblTotalBiaya.setText(null);
+        lblTotalBiaya.setText("Proses Sukses!");
     }//GEN-LAST:event_btnBuatActionPerformed
 
     private void btnLogutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogutActionPerformed
@@ -455,6 +461,12 @@ public class rental extends javax.swing.JFrame {
         idx.setDefaultCloseOperation(rental.EXIT_ON_CLOSE);
         this.dispose();
     }//GEN-LAST:event_btnLogutActionPerformed
+
+    private void tglKembaliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tglKembaliMouseClicked
+        // TODO add your handling code here:
+        Date tgl_Pinjam = tglPinjam.getDate();
+        tglKembali.getJCalendar().setMinSelectableDate(tgl_Pinjam);
+    }//GEN-LAST:event_tglKembaliMouseClicked
 
     /**
      * @param args the command line arguments

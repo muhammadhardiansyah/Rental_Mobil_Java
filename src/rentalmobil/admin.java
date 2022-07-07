@@ -370,10 +370,11 @@ public class admin extends javax.swing.JFrame {
                 .addGap(3, 3, 3)
                 .addComponent(lblKet)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnTambah)
-                    .addComponent(btnHapus)
-                    .addComponent(btnUbah, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnUbah, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnTambah)
+                        .addComponent(btnHapus)))
                 .addContainerGap())
         );
 
@@ -494,7 +495,7 @@ public class admin extends javax.swing.JFrame {
                 System.out.println("Error: "+ ex);
             }
             DefaultTableModel tbl = (DefaultTableModel) tblDaftarPeminjaman.getModel();
-            tbl.addRow(new Object[]{id_peminjaman,nama,merk,strPinjam,strKembali,"Rp. " + totalBiaya});
+            tbl.addRow(new Object[]{id_peminjaman,nama,no_polisi,strPinjam,strKembali,"Rp. " + totalBiaya});
 
             cbNama.setSelectedItem("Choose..");
             cbMerk.setSelectedItem("Choose..");
@@ -539,7 +540,7 @@ public class admin extends javax.swing.JFrame {
 
             DefaultTableModel tbl = (DefaultTableModel) tblDaftarPeminjaman.getModel();
             tbl.setValueAt(nama, tblDaftarPeminjaman.getSelectedRow(), 1);
-            tbl.setValueAt(merk, tblDaftarPeminjaman.getSelectedRow(), 2);
+            tbl.setValueAt(no_polisi, tblDaftarPeminjaman.getSelectedRow(), 2);
             tbl.setValueAt(strPinjam, tblDaftarPeminjaman.getSelectedRow(), 3);
             tbl.setValueAt(strKembali, tblDaftarPeminjaman.getSelectedRow(), 4);
             tbl.setValueAt("Rp. " + totalBiaya, tblDaftarPeminjaman.getSelectedRow(), 5);

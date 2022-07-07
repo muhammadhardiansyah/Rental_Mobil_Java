@@ -395,10 +395,12 @@
                       <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                       <Component id="lblKet" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnTambah" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnHapus" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnUbah" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="btnTambah" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnHapus" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>

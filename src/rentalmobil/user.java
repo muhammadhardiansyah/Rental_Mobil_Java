@@ -53,7 +53,7 @@ public class user extends javax.swing.JFrame {
         Object[][] merk_data = koneksi.getDataMobil();
         cbMerk.addItem("Choose..");
         for (int k=0; k < koneksi.getCountMobil();k++){
-            cbMerk.addItem(merk_data[k][3] + " (" + merk_data[k][1] + " - " + merk_data[k][2] + ")");
+            cbMerk.addItem(merk_data[k][3] + " - " + merk_data[k][1] + " - " + merk_data[k][2]);
         }
     }
 
@@ -423,12 +423,20 @@ public class user extends javax.swing.JFrame {
 
     private void tblDaftarPeminjamanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDaftarPeminjamanMouseClicked
         // TODO add your handling code here:
-        cbMerk.setSelectedItem(tblDaftarPeminjaman.getValueAt(tblDaftarPeminjaman.getSelectedRow(), 2).toString());
+        Koneksi koneksi = new Koneksi();
+        String no_polisi = tblDaftarPeminjaman.getValueAt(tblDaftarPeminjaman.getSelectedRow(), 1).toString();  
+        Object [][] data = koneksi.getDataMobil();
+        for (int i = 0; i < koneksi.getCountMobil(); i++){
+            if (no_polisi.equals(data[i][3])){
+                cbMerk.setSelectedItem(no_polisi + " - " + data[i][1] + " - " + data[i][2]);
+            }
+        }
+//        cbMerk.setSelectedItem(tblDaftarPeminjaman.getValueAt(tblDaftarPeminjaman.getSelectedRow(), 2).toString());
         try {
             DefaultTableModel table = (DefaultTableModel) tblDaftarPeminjaman.getModel();
             int selectedRow = tblDaftarPeminjaman.getSelectedRow();
-            Date pinjam = new SimpleDateFormat("dd-MM-yyyy").parse((String)table.getValueAt(selectedRow, 3).toString());
-            Date kembali = new SimpleDateFormat("dd-MM-yyyy").parse((String)table.getValueAt(selectedRow, 4).toString());
+            Date pinjam = new SimpleDateFormat("dd-MM-yyyy").parse((String)table.getValueAt(selectedRow, 4).toString());
+            Date kembali = new SimpleDateFormat("dd-MM-yyyy").parse((String)table.getValueAt(selectedRow, 5).toString());
             tglPinjam.setDate(pinjam);
             tglKembali.setDate(kembali);
         } catch (ParseException ex) {
@@ -447,6 +455,8 @@ public class user extends javax.swing.JFrame {
         String str_mobil = cbMerk.getSelectedItem().toString();
         String[] mobil = str_mobil.split(" ");
         String no_polisi = mobil[0];
+        String merk = mobil[2];
+        String jenis = mobil[4];
         int id_mobil = koneksi.getIdMobil(no_polisi);
 
         SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
@@ -467,10 +477,12 @@ public class user extends javax.swing.JFrame {
             koneksi.ubahDataPeminjaman(id_peminjaman, id_user, id_mobil, strPinjam, strKembali, totalBiaya);
 
             DefaultTableModel tbl = (DefaultTableModel) tblDaftarPeminjaman.getModel();
-            tbl.setValueAt(str_mobil, tblDaftarPeminjaman.getSelectedRow(), 2);
-            tbl.setValueAt(strPinjam, tblDaftarPeminjaman.getSelectedRow(), 3);
-            tbl.setValueAt(strKembali, tblDaftarPeminjaman.getSelectedRow(), 4);
-            tbl.setValueAt("Rp. " + totalBiaya, tblDaftarPeminjaman.getSelectedRow(), 5);
+            tbl.setValueAt(no_polisi, tblDaftarPeminjaman.getSelectedRow(), 1);
+            tbl.setValueAt(merk, tblDaftarPeminjaman.getSelectedRow(), 2);
+            tbl.setValueAt(jenis, tblDaftarPeminjaman.getSelectedRow(), 3);
+            tbl.setValueAt(strPinjam, tblDaftarPeminjaman.getSelectedRow(), 4);
+            tbl.setValueAt(strKembali, tblDaftarPeminjaman.getSelectedRow(), 5);
+            tbl.setValueAt("Rp. " + totalBiaya, tblDaftarPeminjaman.getSelectedRow(), 6);
             lblKet.setText("Data berhasil diperbarui!");
         }
 
